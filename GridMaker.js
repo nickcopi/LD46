@@ -1,8 +1,9 @@
 class GridMaker{
-	constructor(seed,gridSize,itemSize){
+	constructor(seed,gridSize,itemSize,paintColor){
 		this.random = new Random(seed);
 		this.gridSize = gridSize;
 		this.itemSize = itemSize;
+		this.paintColor = paintColor;
 		if(!this.itemSize) this.itemSize = gridSize;
 		this.grid = [];
 		this.initGrid();
@@ -13,7 +14,7 @@ class GridMaker{
 			for(let j = 0; j < this.gridSize; j++){
 				let type = this.random.next()>0.5?GridEnum.LOCKED:GridEnum.OPEN;
 				//if(j === 0 || i === 0 || j === this.gridSize-1 || i === this.gridSize-1) type = GridEnum.LOCKED;
-				newArray.push(new GridItem(i*this.itemSize,j*this.itemSize,this.itemSize,type));
+				newArray.push(new GridItem(i*this.itemSize,j*this.itemSize,this.itemSize,type,this.paintColor));
 			}
 			this.grid.push(newArray);
 		}

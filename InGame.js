@@ -3,13 +3,14 @@ class InGame extends Scene{
 		super(canvas,exit);
 		this.gridSize = Constants.GRID_SIZE;
 		this.seed = extra.seed;
-		this.gridMaker = new GridMaker(this.seed,this.gridSize);
+		this.save = new Save();
+		this.colors = this.save.getColors();
+		this.gridMaker = new GridMaker(this.seed,this.gridSize,this.gridSize,this.colors.paint);
 		this.grid = this.gridMaker.grid;
-		this.player = new Player(this.gridMaker.spawnX,this.gridMaker.spawnY,this.gridSize,this.gridSize);
+		this.player = new Player(this.gridMaker.spawnX,this.gridMaker.spawnY,this.gridSize,this.gridSize,this.colors.skin);
 		this.initControls();
 		this.won = false;
 		this.tick = 0;
-		this.save = new Save();
 	}
 	paintGrid(){
 		this.grid[this.player.gridX(this.gridSize)][this.player.gridY(this.gridSize)].type = GridEnum.PAINTED;

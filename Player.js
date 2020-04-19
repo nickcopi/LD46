@@ -7,16 +7,17 @@ const Directions = {
 }
 
 class Player extends Entity{
-	constructor(x,y,width,height){
+	constructor(x,y,width,height,color){
 		super(x,y,width,height);
 		this.oldDirection = Directions.NONE;
 		this.direction = Directions.NONE;
 		this.speed = 3;
 		this.smashes = 0;
 		this.smashing = false;
+		this.color = color;
 	}
 	render(cavas,ctx,offsetX,offsetY){
-		ctx.fillStyle = '#add8e6';
+		ctx.fillStyle = this.color;
 		ctx.fillRect(offsetX + this.x,offsetY + this.y,this.width,this.height);
 	}
 	gridX(gridSize){
