@@ -1,9 +1,16 @@
 class Save{
 	constructor(){
 		this.completions = [];
+		this.colors = {
+			skin:Constants.DEFAULT_SKIN,
+			paint:Constants.DEFAULT_PAINT
+		};
 		if(localStorage){
 			if(localStorage.ld46){
 				this.completions = JSON.parse(localStorage.ld46);
+			}
+			if(localStorage.ld46colors){
+				this.colors = JSON.parse(localStorage.ld46colors);
 			}
 		}
 	}
@@ -27,6 +34,21 @@ class Save{
 	}
 	getCompletions(){
 		return this.completions;
+	}
+	useUnlock(unlock){
+		if(unlock.type === 'paint'){
+			this.colors.paint = unlock.color;
+		} else {
+			this.colors.skin = unlock.color;
+		}
+		try{
+			localStorage.ld46colors = JSON.stringify(this.colors);
+		}catch(e){
+			console.log(e);
+		}
+	}
+	getColors(){
+		return this.colors;
 	}
 
 }

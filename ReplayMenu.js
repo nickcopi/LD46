@@ -47,8 +47,10 @@ class ReplayMenu extends Scene{
 		this.selected += direction;
 		if(this.selected < 0) this.selected = this.completions.length - 1;
 		if(this.selected >= this.completions.length) this.selected = 0;
-		this.gridMaker = new GridMaker(this.completions[this.selected].seed, 26, this.itemSize);
-		this.grid = this.gridMaker.grid;
+		if(this.completions[this.selected]){
+			this.gridMaker = new GridMaker(this.completions[this.selected].seed, 26, this.itemSize);
+			this.grid = this.gridMaker.grid;
+		}
 	}
 	update(){
 

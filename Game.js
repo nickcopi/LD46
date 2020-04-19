@@ -2,13 +2,15 @@ const Scenes = [
 	MainMenu,
 	InGame,
 	ReplayMenu,
-	Instructions
+	Instructions,
+	UnlockMenu
 ]
 const SceneEnum = {
 	MAIN_MENU:0,
 	INGAME:1,
 	REPLAY:2,
-	INSTRUCTIONS:3
+	INSTRUCTIONS:3,
+	UNLOCKS:4
 }
 
 class Game{
@@ -19,7 +21,6 @@ class Game{
 		this.scene.play();
 	}
 	exit(scene,extra){
-		console.log(this.scene);
 		this.scene.stop();
 		if(scene === undefined)
 			scene = 0;
