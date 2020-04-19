@@ -7,6 +7,7 @@ class InGame extends Scene{
 		this.colors = this.save.getColors();
 		this.gridMaker = new GridMaker(this.seed,this.gridSize,this.gridSize,this.colors.paint);
 		this.grid = this.gridMaker.grid;
+		this.name = this.gridMaker.name;
 		this.player = new Player(this.gridMaker.spawnX,this.gridMaker.spawnY,this.gridSize,this.gridSize,this.colors.skin);
 		this.initControls();
 		this.won = false;
@@ -112,10 +113,13 @@ class InGame extends Scene{
 		const canvas = this.canvas;
 		const ctx = this.ctx;
 		const offsetX = Math.round(canvas.width/2 - (this.gridSize * this.gridSize * 0.5));
-		const offsetY = Math.round(canvas.height/2 - (this.gridSize * this.gridSize * 0.5));
+		const offsetY = 40; canvas.height - Math.round(canvas.height/2 - (this.gridSize * this.gridSize * 0.5));
 		ctx.clearRect(0,0,canvas.width,canvas.height);
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0,0,canvas.width,canvas.height);
+		ctx.fillStyle = 'white';
+		ctx.font = '30px Arial';
+		ctx.fillText(this.name, this.canvas.width/2 - this.ctx.measureText(this.name).width/2, 30)
 		this.grid.forEach(row=>row.forEach(gridItem=>gridItem.render(canvas,ctx,offsetX,offsetY)));
 		this.player.render(canvas,ctx,offsetX,offsetY);
 		ctx.fillStyle = 'white';

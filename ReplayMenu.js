@@ -50,6 +50,7 @@ class ReplayMenu extends Scene{
 		if(this.completions[this.selected]){
 			this.gridMaker = new GridMaker(this.completions[this.selected].seed, 26, this.itemSize);
 			this.grid = this.gridMaker.grid;
+			this.name = this.gridMaker.name;
 		}
 	}
 	update(){
@@ -71,7 +72,7 @@ class ReplayMenu extends Scene{
 			this.fillCenterText('Press Esc to go back.', 360);
 		} else {
 			const offsetX = Math.round(canvas.width/2 - (this.itemSize * this.itemSize * 0.5));
-			const offsetY = 250;
+			const offsetY = 330;
 			this.grid.forEach(row=>row.forEach(gridItem=>gridItem.render(canvas,ctx,offsetX,offsetY)));
 			//ctx.fillStyle = '#add8e6';
 			ctx.fillStyle = 'white';
@@ -81,8 +82,9 @@ class ReplayMenu extends Scene{
 			if(this.selected < this.completions.length-1)
 				this.ctx.fillText('>',this.canvas.width - (offsetX - 200),canvas.height/2 + (this.itemSize*this.itemSize*0.5));
 			ctx.font = '40px Arial';
-			this.fillCenterText(`Lowest smashes: ${this.completions[this.selected].score}`, 550);
+			this.fillCenterText(`Lowest smashes: ${this.completions[this.selected].score}`, 630);
 			ctx.font = '30px Arial';
+			this.fillCenterText(this.name,offsetY-50);
 			ctx.fillStyle = '#add8e6';
 			this.fillCenterText('A/D to move left or right to select a course. Space to replay it.',700);
 

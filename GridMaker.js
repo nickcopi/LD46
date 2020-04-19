@@ -6,7 +6,10 @@ class GridMaker{
 		this.paintColor = paintColor;
 		if(!this.itemSize) this.itemSize = gridSize;
 		this.grid = [];
+		this.nameParts = ['am', 'phi', 'mor', 'to', 'ke', 'ti', 'tam', 'phe', 'tu', 'in', 'ro', 'he', 'va', 'no', 'ca', 'ine', 'me', 'na', 'jua', 'ri', 'ma', 'co', 'ne', 'do', 'mo', 'de', 'ni', 've', 'me', 'du', 'lo', 'ta', 'go'];
+		this.name = '';
 		this.initGrid();
+		this.initName();
 	}
 	initGrid(){
 		for(let i = 0; i < this.gridSize; i++){
@@ -87,6 +90,11 @@ class GridMaker{
 				});
 				gridItem.openNeighbors = open;
 			}
+		}
+	}
+	initName(){
+		for(let i = 0; i < 4; i++){
+			this.name += this.nameParts[Math.floor(this.random.next()*this.nameParts.length)];
 		}
 	}
 }
