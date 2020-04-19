@@ -19,6 +19,24 @@ class Player extends Entity{
 	render(cavas,ctx,offsetX,offsetY){
 		ctx.fillStyle = this.color;
 		ctx.fillRect(offsetX + this.x,offsetY + this.y,this.width,this.height);
+		ctx.fillStyle = 'grey';
+		ctx.font = '30px Arial';
+		if(this.direction === Directions.NONE){
+			switch(this.oldDirection){
+				case Directions.LEFT:
+					ctx.fillText('<',offsetX+this.x-20,offsetY+this.y+23)
+					break
+				case Directions.RIGHT:
+					ctx.fillText('>',offsetX+this.x+26,offsetY+this.y+23)
+					break
+				case Directions.UP:
+					ctx.fillText('^',offsetX+this.x+7,offsetY+this.y+5)
+					break
+				case Directions.DOWN:
+					ctx.fillText('v',offsetX+this.x+7,offsetY+this.y+48)
+					break
+			}
+		}
 	}
 	gridX(gridSize){
 		return Math.floor(this.x/gridSize);

@@ -127,7 +127,6 @@ class InGame extends Scene{
 			ctx.font = '100px Arial';
 			const text = 'You Win!';
 			ctx.fillText(text, this.canvas.width/2 - this.ctx.measureText(text).width/2, this.canvas.height/2)
-
 		}
 	}
 
