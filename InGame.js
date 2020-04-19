@@ -1,12 +1,14 @@
 class InGame extends Scene{
-	constructor(canvas){
-		super(canvas);
+	constructor(canvas,exit){
+		super(canvas,exit);
 		this.grid = [];
 		this.gridSize = 26;
 		this.player = new Player(0,0,this.gridSize,this.gridSize);
 		this.random = new Random(Math.floor(Math.random()*100000));
 		this.initGrid();
 		this.initControls();
+		this.won = false;
+		this.tick = 0;
 	}
 	initGrid(){
 		for(let i = 0; i < this.gridSize; i++){
@@ -92,6 +94,21 @@ class InGame extends Scene{
 	paintGrid(){
 		this.grid[this.player.gridX(this.gridSize)][this.player.gridY(this.gridSize)].type = GridEnum.PAINTED;
 	}
+	checkDone(){
+		if(this.player.direction !== Directions.NONE) return;
+		let open = 0;
+		for(let y = 0; y < this.gridSize; y++){
+			for(let x = 0; x < this.gridSize; x++){
+				if(this.grid[y][x].type === GridEnum.OPEN)
+					open++;
+			}
+		}
+		if(!open) {
+			this.won = true;
+			this.winTick = this.tick;
+		}
+		
+	}
 	initControls(){
 		window.addEventListener('keypress',this.keypress.bind(this));
 	}
@@ -122,10 +139,22 @@ class InGame extends Scene{
 			this.render();
 		},this.frameRate);
 	}
+	pause(){
+		clearInterval(this.interval);
+	}
+	stop(){
+		this.pause();
+		window.removeEventListener('keypress',this.keypress.bind(this));
+	}
 	update(){
+		if(this.won){
+			if(this.tick > this.winTick + this.frameRate*60) this.exit();
+			return;
+		}
 		this.player.move(this.grid,this.gridSize);
 		this.player.smash(this.grid,this.gridSize);
 		this.paintGrid();
+		this.checkDone();
 	}
 	render(){
 		const canvas = this.canvas;
@@ -141,6 +170,13 @@ class InGame extends Scene{
 		ctx.font = '100px Arial';
 		ctx.fillText(this.player.smashes, offsetX/2-50,canvas.height/2);
 		ctx.fillText(this.player.smashes, canvas.width - (offsetX/2+50),canvas.height/2);
+		if(this.won){
+			ctx.fillStyle = 'green';
+			ctx.font = '100px Arial';
+			const text = 'You Win!';
+			ctx.fillText(text, this.canvas.width/2 - this.ctx.measureText(text).width/2, this.canvas.height/2)
+
+		}
 	}
 
 }
