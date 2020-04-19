@@ -63,7 +63,7 @@ class InGame extends Scene{
 				this.player.direction = Directions.DOWN;
 				break;
 			case ' ':
-				if(this.player.direction === Directions.NONE)
+				if(this.player.direction === Directions.NONE && this.player.oldDirection !== Directions.NONE)
 					this.player.smashing = true;
 				break;
 			case 'Escape':
