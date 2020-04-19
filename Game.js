@@ -1,6 +1,8 @@
 const Scenes = [
 	MainMenu,
-	InGame
+	InGame,
+	Instructions,
+	Instructions
 ]
 
 class Game{

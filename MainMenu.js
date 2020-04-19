@@ -39,7 +39,7 @@ class MainMenu extends Scene{
 		this.exit(1);
 	}
 	instructions(){
-
+		this.exit(3);
 	}
 	about(){
 
