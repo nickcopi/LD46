@@ -110,10 +110,23 @@ class InGame extends Scene{
 		
 	}
 	initControls(){
-		window.addEventListener('keypress',this.keypress.bind(this));
+		this.keydownEvent = this.keydown.bind(this);
+		window.addEventListener('keydown',this.keydownEvent);
 	}
-	keypress(e){
+	keydown(e){
 		if(this.player.direction !== Directions.NONE) return;
+		if(this.paused){
+			switch(e.key){
+				case ' ':
+					this.play();
+					break;
+				case 'Escape':
+					this.exit();
+
+			}
+			return;
+
+		}
 		switch(e.key){
 			case 'a':
 				this.player.direction = Directions.LEFT;
@@ -131,9 +144,13 @@ class InGame extends Scene{
 				if(this.player.direction === Directions.NONE)
 					this.player.smashing = true;
 				break;
+			case 'Escape':
+				this.pause();
+				break;
 		}
 	}
 	play(){
+		this.paused = false;
 		this.interval = setInterval(()=>{
 			this.update();
 			this.render();
@@ -141,10 +158,19 @@ class InGame extends Scene{
 	}
 	pause(){
 		clearInterval(this.interval);
+		this.paused = true;
+		this.ctx.globalAlpha = 0.5;
+		this.ctx.fillStyle = 'black';
+		this.ctx.fillRect(0,0,canvas.width,canvas.height);
+		this.ctx.globalAlpha = 1;
+		this.ctx.fillStyle = '#add8e6';
+		this.ctx.font = '40px Arial';
+		const text = 'Paused. Space to Continue. Esc to exit.';
+		this.ctx.fillText(text, this.canvas.width/2 - this.ctx.measureText(text).width/2, this.canvas.height/2);
 	}
 	stop(){
 		this.pause();
-		window.removeEventListener('keypress',this.keypress.bind(this));
+		window.removeEventListener('keydown',this.keydownEvent);
 	}
 	update(){
 		if(this.won){

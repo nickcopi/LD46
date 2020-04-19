@@ -6,7 +6,7 @@ const Scenes = [
 class Game{
 	constructor(){
 		this.canvas = document.getElementById('canvas');
-		this.currentScene = 1;
+		this.currentScene = 0;
 		this.scene = new Scenes[this.currentScene](canvas,this.exit.bind(this));
 		this.scene.play();
 	}
