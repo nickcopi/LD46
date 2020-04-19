@@ -4,13 +4,13 @@ class MainMenu extends Scene{
 		this.tick = 0;
 		this.initControls();
 		this.options = [];
-		this.selected = 0;
+		this.selected = 1;
 		this.initOptions();
 	}
 	initOptions(){
 		const base = 270;
 		const actions = [this.replayOption, this.randomOption,this.instructions,this.about].map(func=>func.bind(this));
-		this.options = ['Replay','Random','Instructions','About'].map((name,i)=>{
+		this.options = ['Replay','Play','Instructions','About'].map((name,i)=>{
 			return new GameOption(base + i*100,name, actions[i]);
 		});
 		this.options[this.selected].selected = true;
@@ -36,7 +36,7 @@ class MainMenu extends Scene{
 	
 	}
 	randomOption(){
-		this.exit(1);
+		this.exit(1,{seed:Math.floor(Math.random()*100000)});
 	}
 	instructions(){
 		this.exit(3);

@@ -16,7 +16,7 @@ class Player extends Entity{
 		this.smashing = false;
 	}
 	render(cavas,ctx,offsetX,offsetY){
-		ctx.fillStyle = 'blue';
+		ctx.fillStyle = '#add8e6';
 		ctx.fillRect(offsetX + this.x,offsetY + this.y,this.width,this.height);
 	}
 	gridX(gridSize){

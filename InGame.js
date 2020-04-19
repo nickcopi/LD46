@@ -1,14 +1,16 @@
 class InGame extends Scene{
-	constructor(canvas,exit){
+	constructor(canvas,exit,extra){
 		super(canvas,exit);
 		this.grid = [];
 		this.gridSize = 26;
 		this.player = new Player(0,0,this.gridSize,this.gridSize);
-		this.random = new Random(Math.floor(Math.random()*100000));
+		this.seed = extra.seed;
+		this.random = new Random(this.seed);
 		this.initGrid();
 		this.initControls();
 		this.won = false;
 		this.tick = 0;
+		this.save = new Save();
 	}
 	initGrid(){
 		for(let i = 0; i < this.gridSize; i++){
@@ -159,7 +161,7 @@ class InGame extends Scene{
 	pause(){
 		clearInterval(this.interval);
 		this.paused = true;
-		this.ctx.globalAlpha = 0.5;
+		this.ctx.globalAlpha = 0.75;
 		this.ctx.fillStyle = 'black';
 		this.ctx.fillRect(0,0,canvas.width,canvas.height);
 		this.ctx.globalAlpha = 1;
@@ -174,7 +176,10 @@ class InGame extends Scene{
 	}
 	update(){
 		if(this.won){
-			if(this.tick > this.winTick + 60) this.exit();
+			if(this.tick > this.winTick + 60){
+				this.save.addCompletion(this.seed,this.player.smashes);
+				this.exit();
+			}
 			this.tick++;
 			return;
 		}
@@ -199,7 +204,7 @@ class InGame extends Scene{
 		ctx.fillText(this.player.smashes, offsetX/2-50,canvas.height/2);
 		ctx.fillText(this.player.smashes, canvas.width - (offsetX/2+50),canvas.height/2);
 		if(this.won){
-			ctx.fillStyle = 'green';
+			ctx.fillStyle = '#baffc9';
 			ctx.font = '100px Arial';
 			const text = 'You Win!';
 			ctx.fillText(text, this.canvas.width/2 - this.ctx.measureText(text).width/2, this.canvas.height/2)

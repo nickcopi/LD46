@@ -12,13 +12,13 @@ class Game{
 		this.scene = new Scenes[this.currentScene](canvas,this.exit.bind(this));
 		this.scene.play();
 	}
-	exit(scene){
+	exit(scene,extra){
 		console.log(this.scene);
 		this.scene.stop();
 		if(scene === undefined)
 			scene = 0;
 		this.currentScene = scene;
-		this.scene = new Scenes[this.currentScene](canvas,this.exit.bind(this));
+		this.scene = new Scenes[this.currentScene](canvas,this.exit.bind(this),extra);
 		this.scene.play();
 	}
 }
