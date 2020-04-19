@@ -28,28 +28,41 @@ class Player extends Entity{
 	smash(grid,gridSize){
 		if(!this.smashing || this.oldDirection === Directions.NONE || this.direction !== Directions.NONE)
 			return;
+		let item;
 		switch(this.oldDirection){
 			case Directions.LEFT:
-				grid[this.gridX(gridSize)-1][this.gridY(gridSize)].type = GridEnum.OPEN;
+				item = grid[this.gridX(gridSize)-1][this.gridY(gridSize)];
+				if(item.type === GridEnum.LOCKED) this.smashes++;
+				item.type = GridEnum.OPEN;
 				break;
 			case Directions.RIGHT:
-				grid[this.gridX(gridSize)+1][this.gridY(gridSize)].type = GridEnum.OPEN;
+				item = grid[this.gridX(gridSize)+1][this.gridY(gridSize)];
+				if(item.type === GridEnum.LOCKED) this.smashes++;
+				item.type = GridEnum.OPEN;
 				break;
 			case Directions.UP:
-				grid[this.gridX(gridSize)][this.gridY(gridSize)-1].type = GridEnum.OPEN;
+				item = grid[this.gridX(gridSize)][this.gridY(gridSize)-1];
+				if(item.type === GridEnum.LOCKED) this.smashes++;
+				item.type = GridEnum.OPEN;
 				break;
 			case Directions.DOWN:
-				grid[this.gridX(gridSize)][this.gridY(gridSize)+1].type = GridEnum.OPEN;
+				item = grid[this.gridX(gridSize)][this.gridY(gridSize)+1];
+				if(item.type === GridEnum.LOCKED) this.smashes++;
+				item.type = GridEnum.OPEN;
 				break;
 		}
-		this.smashes++;
 		this.smashing = false;
 	}
 	move(grid,gridSize){
 		switch(this.direction){
 			case Directions.LEFT:
 				this.x -= this.speed;
-				if(grid[this.gridX(gridSize)][this.gridY(gridSize)].type === GridEnum.LOCKED){
+				if(this.x < 0){
+					this.x = 0;
+					this.direction = Directions.NONE;
+					this.oldDirection = this.direction;
+				}
+				else if(grid[this.gridX(gridSize)][this.gridY(gridSize)].type === GridEnum.LOCKED){
 					this.x = (this.gridX(gridSize) + 1) * gridSize;
 					this.oldDirection = this.direction;
 					this.direction = Directions.NONE;
@@ -57,7 +70,12 @@ class Player extends Entity{
 				break;
 			case Directions.RIGHT:
 				this.x += this.speed;
-				if(grid[this.gridX(gridSize) +1 ][this.gridY(gridSize)].type === GridEnum.LOCKED){
+				if(this.x+this.width >= gridSize*gridSize){
+					this.x = gridSize*gridSize - this.width;
+					this.direction = Directions.NONE;
+					this.oldDirection = this.direction;
+				}
+				else if(grid[this.gridX(gridSize) +1 ][this.gridY(gridSize)].type === GridEnum.LOCKED){
 					this.x = (this.gridX(gridSize)) * gridSize;
 					this.oldDirection = this.direction;
 					this.direction = Directions.NONE;
@@ -65,7 +83,12 @@ class Player extends Entity{
 				break;
 			case Directions.UP:
 				this.y -= this.speed;
-				if(grid[this.gridX(gridSize)][this.gridY(gridSize)].type === GridEnum.LOCKED){
+				if(this.y < 0){
+					this.y = 0;
+					this.direction = Directions.NONE;
+					this.oldDirection = this.direction;
+				}
+				else if(grid[this.gridX(gridSize)][this.gridY(gridSize)].type === GridEnum.LOCKED){
 					this.y = (this.gridY(gridSize) + 1) * gridSize;
 					this.oldDirection = this.direction;
 					this.direction = Directions.NONE;
@@ -73,7 +96,12 @@ class Player extends Entity{
 				break;
 			case Directions.DOWN:
 				this.y += this.speed;
-				if(grid[this.gridX(gridSize)][this.gridY(gridSize)+1].type === GridEnum.LOCKED){
+				if(this.y+this.height >= gridSize*gridSize){
+					this.y = gridSize*gridSize - this.height;
+					this.direction = Directions.NONE;
+					this.oldDirection = this.direction;
+				}
+				else if(grid[this.gridX(gridSize)][this.gridY(gridSize)+1].type === GridEnum.LOCKED){
 					this.y = (this.gridY(gridSize)) * gridSize;
 					this.oldDirection = this.direction;
 					this.direction = Directions.NONE;

@@ -2,8 +2,9 @@ class InGame extends Scene{
 	constructor(canvas){
 		super(canvas);
 		this.grid = [];
-		this.gridSize = 27;
+		this.gridSize = 26;
 		this.player = new Player(0,0,this.gridSize,this.gridSize);
+		this.random = new Random(Math.floor(Math.random()*100000));
 		this.initGrid();
 		this.initControls();
 	}
@@ -11,8 +12,8 @@ class InGame extends Scene{
 		for(let i = 0; i < this.gridSize; i++){
 			const newArray = [];
 			for(let j = 0; j < this.gridSize; j++){
-				let type = Math.random()>0.5?GridEnum.LOCKED:GridEnum.OPEN;
-				if(j === 0 || i === 0 || j === this.gridSize-1 || i === this.gridSize-1) type = GridEnum.LOCKED;
+				let type = this.random.next()>0.5?GridEnum.LOCKED:GridEnum.OPEN;
+				//if(j === 0 || i === 0 || j === this.gridSize-1 || i === this.gridSize-1) type = GridEnum.LOCKED;
 				newArray.push(new GridItem(i*this.gridSize,j*this.gridSize,this.gridSize,type));
 			}
 			this.grid.push(newArray);
@@ -110,7 +111,8 @@ class InGame extends Scene{
 				this.player.direction = Directions.DOWN;
 				break;
 			case ' ':
-				this.player.smashing = true;
+				if(this.player.direction === Directions.NONE)
+					this.player.smashing = true;
 				break;
 		}
 	}
@@ -135,6 +137,10 @@ class InGame extends Scene{
 		ctx.fillRect(0,0,canvas.width,canvas.height);
 		this.grid.forEach(row=>row.forEach(gridItem=>gridItem.render(canvas,ctx,offsetX,offsetY)));
 		this.player.render(canvas,ctx,offsetX,offsetY);
+		ctx.fillStyle = 'white';
+		ctx.font = '100px Arial';
+		ctx.fillText(this.player.smashes, offsetX/2-50,canvas.height/2);
+		ctx.fillText(this.player.smashes, canvas.width - (offsetX/2+50),canvas.height/2);
 	}
 
 }
