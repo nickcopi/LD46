@@ -3,7 +3,7 @@ const GridEnum = {
 	OPEN:1,
 	PAINTED:2
 }
-const GridColors = ['black','white','red'];
+const GridColors = ['black','white','purple'];
 
 class GridItem extends Entity{
 	constructor(x,y,size,type){

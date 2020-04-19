@@ -3,7 +3,9 @@ class InGame extends Scene{
 		super(canvas);
 		this.grid = [];
 		this.gridSize = 27;
+		this.player = new Player(0,0,this.gridSize,this.gridSize);
 		this.initGrid();
+		this.initControls();
 	}
 	initGrid(){
 		for(let i = 0; i < this.gridSize; i++){
@@ -57,10 +59,12 @@ class InGame extends Scene{
 			for(let x = 0; x < this.gridSize; x++){
 				const gridItem = this.grid[y][x];
 				if(gridItem.flow !== maxFlowIndex) gridItem.type = GridEnum.LOCKED;
+				else {
+					this.player.y = this.gridSize * x;
+					this.player.x = this.gridSize * y;
+				}
 			}
 		}
-
-
 	}
 	findNeighbors(){
 		for(let y = 0; y < this.gridSize; y++){
@@ -84,6 +88,32 @@ class InGame extends Scene{
 			}
 		}
 	}
+	paintGrid(){
+		this.grid[this.player.gridX(this.gridSize)][this.player.gridY(this.gridSize)].type = GridEnum.PAINTED;
+	}
+	initControls(){
+		window.addEventListener('keypress',this.keypress.bind(this));
+	}
+	keypress(e){
+		if(this.player.direction !== Directions.NONE) return;
+		switch(e.key){
+			case 'a':
+				this.player.direction = Directions.LEFT;
+				break;
+			case 'd':
+				this.player.direction = Directions.RIGHT;
+				break;
+			case 'w':
+				this.player.direction = Directions.UP;
+				break;
+			case 's':
+				this.player.direction = Directions.DOWN;
+				break;
+			case ' ':
+				this.player.smashing = true;
+				break;
+		}
+	}
 	play(){
 		this.interval = setInterval(()=>{
 			this.update();
@@ -91,14 +121,20 @@ class InGame extends Scene{
 		},this.frameRate);
 	}
 	update(){
+		this.player.move(this.grid,this.gridSize);
+		this.player.smash(this.grid,this.gridSize);
+		this.paintGrid();
 	}
 	render(){
 		const canvas = this.canvas;
 		const ctx = this.ctx;
+		const offsetX = Math.round(canvas.width/2 - (this.gridSize * this.gridSize * 0.5));
+		const offsetY = Math.round(canvas.height/2 - (this.gridSize * this.gridSize * 0.5));
 		ctx.clearRect(0,0,canvas.width,canvas.height);
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0,0,canvas.width,canvas.height);
-		this.grid.forEach(row=>row.forEach(gridItem=>gridItem.render(canvas,ctx,Math.round(canvas.width/2 - (this.gridSize * this.gridSize * 0.5)),Math.round(canvas.height/2 - (this.gridSize * this.gridSize * 0.5)))));
+		this.grid.forEach(row=>row.forEach(gridItem=>gridItem.render(canvas,ctx,offsetX,offsetY)));
+		this.player.render(canvas,ctx,offsetX,offsetY);
 	}
 
 }
