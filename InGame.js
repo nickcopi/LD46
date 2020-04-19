@@ -1,7 +1,7 @@
 class InGame extends Scene{
 	constructor(canvas,exit,extra){
 		super(canvas,exit);
-		this.gridSize = 26;
+		this.gridSize = Constants.GRID_SIZE;
 		this.seed = extra.seed;
 		this.gridMaker = new GridMaker(this.seed,this.gridSize);
 		this.grid = this.gridMaker.grid;

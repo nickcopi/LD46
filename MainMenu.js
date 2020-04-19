@@ -33,13 +33,13 @@ class MainMenu extends Scene{
 		}
 	}
 	replayOption(){
-	
+		this.exit(SceneEnum.REPLAY);	
 	}
 	randomOption(){
-		this.exit(1,{seed:Math.floor(Math.random()*100000)});
+		this.exit(SceneEnum.INGAME,{seed:Math.floor(Math.random()*100000)});
 	}
 	instructions(){
-		this.exit(3);
+		this.exit(SceneEnum.INSTRUCTIONS);
 	}
 	about(){
 

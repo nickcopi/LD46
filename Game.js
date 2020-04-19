@@ -1,9 +1,15 @@
 const Scenes = [
 	MainMenu,
 	InGame,
-	Instructions,
+	ReplayMenu,
 	Instructions
 ]
+const SceneEnum = {
+	MAIN_MENU:0,
+	INGAME:1,
+	REPLAY:2,
+	INSTRUCTIONS:3
+}
 
 class Game{
 	constructor(){
