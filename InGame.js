@@ -148,13 +148,15 @@ class InGame extends Scene{
 	}
 	update(){
 		if(this.won){
-			if(this.tick > this.winTick + this.frameRate*60) this.exit();
+			if(this.tick > this.winTick + 60) this.exit();
+			this.tick++;
 			return;
 		}
 		this.player.move(this.grid,this.gridSize);
 		this.player.smash(this.grid,this.gridSize);
 		this.paintGrid();
 		this.checkDone();
+		this.tick++;
 	}
 	render(){
 		const canvas = this.canvas;
