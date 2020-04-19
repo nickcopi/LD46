@@ -13,7 +13,12 @@ class Unlock{
 	}
 	render(canvas,ctx){
 		ctx.fillStyle = this.color;
-		if(this.type === 'paint'){
+		if(this.locked){
+			ctx.fillStyle = 'white';
+			ctx.font = '80px Arial';
+			ctx.fillText('?',this.x+10,this.y+60);
+		}
+		else if(this.type === 'paint'){
 			ctx.beginPath();
 			ctx.arc(this.x+this.size/2, this.y+this.size/2, this.size/2, 0, 2 * Math.PI, false);
 			ctx.fill();	
@@ -29,12 +34,6 @@ class Unlock{
 				ctx.lineWidth = 5;
 				ctx.strokeRect(this.x,this.y,this.size,this.size);
 			}
-		}
-		if(this.locked){
-			ctx.fillStyle = 'black';
-			ctx.font = '40px Arial';
-			//ctx.fillRect(this.x,this.y,this.size,this.size);
-			ctx.fillText('X',this.x+10,this.y+40);
 		}
 		if(this.selected){
 			ctx.fillStyle = 'white';

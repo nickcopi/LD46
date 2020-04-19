@@ -165,9 +165,9 @@ class UnlockMenu extends Scene{
 		let name = `${unlock.name} ${unlock.type}`;
 		if(unlock.locked){
 			if(unlock.costType === 'wins'){
-				name += `, requires ${unlock.cost} wins to unlock.`;
+				name = `?????, requires ${unlock.cost} wins to unlock.`;
 			} else {
-				name += `, requires a lowest smash solve of ${unlock.cost} to unlock.`;
+				name = `?????, requires a lowest smash solve of ${unlock.cost} to unlock.`;
 			}
 		}
 		ctx.font = '40px Arial';
