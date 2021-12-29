@@ -77,6 +77,9 @@ class MainMenu extends Scene{
 		ctx.font = '150px Arial';
 		this.fillCenterText('LiveLock', 150);
 		this.options.forEach(option=>option.render(canvas,ctx));
+		ctx.fillStyle = '#add8e6';
+		ctx.font = '30px Arial';
+		this.fillCenterText('W/S to change options. Space to select.', 700);
 	}
 	fillCenterText(text,y){
 		this.ctx.fillText(text, this.canvas.width/2 - this.ctx.measureText(text).width/2, y)
