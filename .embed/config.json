@@ -1,0 +1,11 @@
+{
+	"name":"LiveLock",
+	"tags":["Game"],
+	"description":"A painting puzzle game made in 12 hours for Ludum Dare 46.",
+	"embed":{
+		"width":1300,
+		"height":750,
+		"file":"index.html"
+	},
+	"date":"April 2020"
+}
